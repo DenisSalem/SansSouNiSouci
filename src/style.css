@@ -1,0 +1,44 @@
+
+#install h1, #splash h1 {
+  color: #222;
+  font-size: 6em;
+  text-align: center;
+  font-weight: lighter;
+}
+
+#install h2 {
+  font-weight: lighter;
+  text-align: center;
+}
+
+#install img, #splash img {
+  display: block;
+  margin: auto;
+}
+
+#install {
+  margin: auto;
+  text-align: center;
+  width: 640px;
+  font-family: 'Loved by the King', cursive;}
+
+#install label, #install p {
+  font-size: 2em;
+}
+
+#install input {
+  font-size: 1.5em;
+  padding: 15px;
+  border: none;
+  background-size: 100% 100%;
+  background-image: url('gfx/inputField.gif');
+  font-family: 'Loved by the King', cursive;
+}
+
+#install input[type=submit] {
+  width: 320px;
+}
+
+#install .error {
+  color: red;
+}

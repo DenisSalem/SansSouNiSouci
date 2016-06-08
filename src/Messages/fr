@@ -1,0 +1,30 @@
+Installation
+Nom d'hôte de la base de données:
+Numéro de port de la base de données:
+Type de base de données:
+Nom de la base de données:
+Nom d'utilisateur de la base de données:
+Mot de passe de la base de données:
+Préfix de tables:
+Pseudo de l'administrateur:
+Mail de l'administrateur:
+Mot de passe de l'administrateur:
+Vérification du mot de passe de l'administrateur:
+Installer
+Le nom d'hôte n'est pas renseigné!
+Le numéro de port n'est pas renseigné!
+Le nom de la base de données n'est pas renseigné!
+Le nom d'utilisateur de la base de données n'est pas renseigné!
+Le mot de passe de la base de données n'est pas renseigné!
+Le préfix de table n'est pas renseigné!
+Le pseudo de l'administrateur n'est pas renseigné!
+Le mot de passe de l'administrateur n'est pas renseigné!
+La vérification du mot de passe n'est pas renseigné!
+L'adresse mail de l'administrateur n'est pas renseigné!
+L'adresse mail de l'administrateur n'est pas valide!
+Aucune base de données sélectionnée!
+Le mot de passe de l'administrateur ne correspond pas à la vérification!
+Nom d'hôte d'hôte invalide.
+Mauvais identifiants de la base de donnée.
+Base de donnée inconnue.
+Mauvais port.
