@@ -1,12 +1,13 @@
 
 #install h1, #splash h1 {
-  color: #222;
-  font-size: 6em;
+  color: #999;
+  font-size: 3em;
   text-align: center;
   font-weight: lighter;
 }
 
 #install h2 {
+  color: #AAA;
   font-weight: lighter;
   text-align: center;
 }
@@ -17,25 +18,28 @@
 }
 
 #install {
+  color: #8e847a;
   margin: auto;
   text-align: center;
   width: 640px;
-  font-family: 'Loved by the King', cursive;}
+  background-color: #f0d9c2;
+  font-family: Sans;
+  padding-bottom:1em;
+  padding-top:1em;}
 
 #install label, #install p {
-  font-size: 2em;
+  font-size: 1em;
 }
 
 #install input {
-  font-size: 1.5em;
+  border: 1px solid #8e847a;
   padding: 15px;
-  border: none;
-  background-size: 100% 100%;
-  background-image: url('gfx/inputField.gif');
-  font-family: 'Loved by the King', cursive;
+  background-color: #fae8d6;
+  font-family: Sans;
 }
 
 #install input[type=submit] {
+  color: #8e847a;
   width: 320px;
 }
 
