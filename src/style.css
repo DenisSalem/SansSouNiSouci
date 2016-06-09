@@ -2,8 +2,29 @@
 #install h1, #splash h1 {
   color: #999;
   font-size: 3em;
+  font-family: Sans;
   text-align: center;
   font-weight: lighter;
+}
+
+#splash {
+  width: 80%;
+  min-width: 640px;
+  margin: auto;
+  border-bottom: 1px solid #CCC;
+}
+
+#toolBar {
+  width: 100%;
+  display: block;
+  padding: 5px 5px 5px 5px;
+  background-color: #f0d9c2;
+}
+
+#toolBar input {
+  border: 1px solid #8e847a;
+  padding: 5px 5px 5px 5px;
+  background-color: #fae8d6;
 }
 
 #install h2 {
@@ -32,8 +53,8 @@
 }
 
 #install input {
-  border: 1px solid #8e847a;
   padding: 15px;
+  border: 1px solid #8e847a;
   background-color: #fae8d6;
   font-family: Sans;
 }

@@ -3,7 +3,7 @@
     header("Location: install.php");
     exit;
   }
-  define("SSNS_SCRIPT_INCLUDED",0);
+  define("SSNS_SCRIPT_INCLUSION",1);
   require_once("core/common.php");
 ?>
 <!DOCTYPE html>
@@ -13,6 +13,18 @@
   </head>
   <body>
     <header id="splash">
+      <div id="toolBar">
+        <?php
+          if (isLoggedIn()) { ?>
+          <?php }
+          else { ?>
+            <form>
+              <input type="text" value="" placeholder="<?php $lang->EchoMessageById(16); ?>">
+              <input type="password" value="" placeholder="<?php $lang->EchoMessageById(17); ?>">
+              <input type="submit" value="<?php $lang->EchoMessageById(18); ?>">
+            </form>
+          <?php } ?>
+      </div>
       <h1>SANS SOU NI SOUCI</h1>
     </header>
     <div id="thread">

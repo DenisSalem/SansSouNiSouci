@@ -1,5 +1,6 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
+
   class LanguageHandler {
     private $lang;
 
@@ -28,7 +29,7 @@
       return $this->GetLine($messageId);
     }
 
-    public function echoMessageById($messageId) {
+    public function EchoMessageById($messageId) {
       echo $this->GetLine($messageId);
     }
   }
@@ -46,7 +47,6 @@
       echo "<p class=\"error\">".$value."</p>\n";
     }
   }
-
 
   //Prevent undefined error
   function FetchFromArray($array, $index) {
@@ -74,5 +74,11 @@
     Throw new ErrorException("Undefined Index", 255);
   }
 
+  function isLoggedIn() {
+    if (isset($_SESSION["userid"])) {
+      return true;
+    }
+    return false;
+  }
   require_once("databaseDrivers.php");
 ?>
