@@ -22,13 +22,47 @@
       $fields["adminPasswd"] = FetchSentData("adminPasswd",false);
       $fields["adminPasswdRepeat"] = FetchSentData("adminPasswdRepeat",false);
       $fields["dbDriver"] = FetchSentData("dbDriver",false);
+      if ($fields["adminPasswd"] != $fields["adminPasswdRepeat"]) {
+        array_push($errors, $lang->getMessageById(15));
+      }
+      if (substr(phpversion(),0,3) >= 5.2 && filter_var($fields["adminMail"], FILTER_VALIDATE_EMAIL, FILTER_NULL_ON_FAILURE) == null) {
+        array_push($errors,$lang->getMessageById(14));
+      }
     }
   }
   catch (Exception $e) {
     array_push($errors,$lang->GetMessageById(13));
   }
 
-  if(count($errors) == 0) {
+  if(!empty($_POST) && count($errors) == 0) {
+    try {
+      if ($fields["dbDriver"] == "pgsql") {
+        $install = new InstallPGSQL(
+          $fields["dbHost"],
+          $fields["dbPort"],
+          $fields["dbName"],
+          $fields["dbUser"],
+          $fields["dbPasswd"],
+          $fields["tablePrefix"]
+        );
+        $install->CreateAdminAccount(
+          $fields["adminLogin"],
+          $fields["adminPasswd"],
+          $fields["adminMail"]
+        );
+        $install->SetConfigurationFile();
+        if(file_exists("_config_.php")) {
+          header("Location: index.php"); 
+          die();
+        }
+      }
+      else {
+        array_push($errors, $lang->GetMessageById(18));
+      }
+    }
+    catch (Exception $e) {
+      array_push($errors, $e->getMessage());
+    }
   }
 ?>
 <!DOCTYPE html>
@@ -49,7 +83,7 @@
 			<p><input name="dbPort" type="text" value="<?php echo fetchFromArray($fields,"dbPort"); ?>" placeholder="ex: 5432"></p>
 			<label for="dbDriver"><?php $lang->echoMessagebyId(3); ?></label>
 			<p>
-				<select name="DRIVER">
+				<select name="dbDriver">
 					<option value="pgsql">PostgreSQL</option>
 				</select>
 			</p>

@@ -1,15 +1,16 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
 
-  abstract class install {
+  abstract class Install {
     protected $tablePrefix;
     protected $dbHost;
     protected $dbPort;
     protected $dbName;
     protected $dbPassword;
+    protected $dbDriver;
 
     function CreateAdminAccount($adminLogin, $adminPasswd, $adminMail) {
-      $dbDriver->prepare_and_execute(
+      $this->dbDriver->PrepareAndExecute(
         "INSERT INTO ".$this->tablePrefix."users(nick,password,mail,rank) VALUES ($1, $2, $3, TRUE)",
         array(
           $adminLogin,
@@ -34,7 +35,7 @@
     }
   }
 
-  class installPGSQL extends install {
+  class InstallPGSQL extends Install {
     function __construct($dbHost, $dbPort, $dbName, $dbUser, $dbPasswd, $tablePrefix) {
       $this->dbHost = $dbHost;
       $this->dbPort = $dbPort;
@@ -49,24 +50,24 @@
                           " user=".$dbUser.
                           " password=".$dbPasswd;
 
-      $dbDriver = new pgsqlDriver($connectionString);
+      $this->dbDriver = new pgsqlDriver($connectionString);
       /* DROPING ALL TABLES*/
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."system CASCADE");
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."users CASCADE");
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."clusters CASCADE");
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."entries CASCADE");
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."items CASCADE");
-      $dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."users CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."system CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."users CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."clusters CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."entries CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."items CASCADE");
+      $this->dbDriver->Execute("DROP TABLE IF EXISTS ".$tablePrefix."users CASCADE");
 
       /* BUILDING TABLES */
-      $dbDriver->Execute(
-        "CREATE TABLE ".$TABLE_PREFIX."system (
+      $this->dbDriver->Execute(
+        "CREATE TABLE ".$tablePrefix."system (
           appSummary varchar(256) DEFAULT '',
           appName       varchar(32) DEFAULT 'SANS SOU NI SOUCI'
         )
       ");
-      $dbDriver->Execute(
-        "CREATE TABLE ".$TABLE_PREFIX."users (
+      $this->dbDriver->Execute(
+        "CREATE TABLE ".$tablePrefix."users (
 	  id bigserial PRIMARY KEY,
 	  nick varchar(32) DEFAULT 'anonymous' NOT NULL,
 	  password varchar(128) NOT NULL,
@@ -76,26 +77,26 @@
           rank boolean DEFAULT FALSE
 	)"
       );
-      $dbDriver->Execute(
-        "CREATE TABLE ".$TABLE_PREFIX."clusters (
+      $this->dbDriver->Execute(
+        "CREATE TABLE ".$tablePrefix."clusters (
 	  id bigserial PRIMARY KEY,
 	  type boolean DEFAULT FALSE
 	)
       ");
-      $dbDriver->Execute(
-        "CREATE TABLE ".$TABLE_PREFIX."entries (
-	  idAuthor bigint REFERENCES ".$TABLE_PREFIX."users(id),
-	  idCluster bigint REFERENCES ".$TABLE_PREFIX."clusters(id),
+      $this->dbDriver->Execute(
+        "CREATE TABLE ".$tablePrefix."entries (
+	  idAuthor bigint REFERENCES ".$tablePrefix."users(id),
+	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
 	  text varchar(1024) NOT NULL,
           title varchar(64) DEFAULT '',
 	  date timestamp  NOT NULL
 	)"
       );
-      $dbDriver->Execute(
-        "CREATE TABLE ".$TABLE_PREFIX."items (
-	  idOwner bigint REFERENCES ".$TABLE_PREFIX."users(id),
-	  idCluster bigint REFERENCES ".$TABLE_PREFIX."clusters(id),
+      $this->dbDriver->Execute(
+        "CREATE TABLE ".$tablePrefix."items (
+	  idOwner bigint REFERENCES ".$tablePrefix."users(id),
+	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
 	  description varchar(1024) NOT NULL,
           img varchar(128) DEFAULT '',
