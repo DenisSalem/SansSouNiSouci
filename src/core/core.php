@@ -80,5 +80,24 @@
     }
     return false;
   }
+
+  function login() {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+    $QueryResult = $dbDriver->PrepareAndExecute(
+      "SELECT * FROM ".$TABLE_PREFIX."users WHERE nick=$1 AND password=$2",
+      array(
+        $_POST["nick"],
+        hash('sha512',$_POST["password"])
+      )
+    );
+    if ($QueryResult->CountRow() == 1) {
+      session_start();
+      return true;
+    }
+    return false;
+
+  }
+
   require_once("databaseDrivers.php");
 ?>

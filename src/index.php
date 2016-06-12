@@ -5,6 +5,10 @@
   }
   define("SSNS_SCRIPT_INCLUSION",1);
   require_once("core/common.php");
+  require_once("_config_.php");
+  if (isset($_POST["nick"]) && isset($_POST["password"]) && !isLoggedIn()) {
+    login();
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,9 +22,9 @@
           if (isLoggedIn()) { ?>
           <?php }
           else { ?>
-            <form>
-              <input type="text" value="" placeholder="<?php $lang->EchoMessageById(16); ?>">
-              <input type="password" value="" placeholder="<?php $lang->EchoMessageById(17); ?>">
+            <form method="POST" action"index.php">
+              <input type="text" name="nick" value="" placeholder="<?php $lang->EchoMessageById(16); ?>">
+              <input type="password" name="password" value="" placeholder="<?php $lang->EchoMessageById(17); ?>">
               <input type="submit" value="<?php $lang->EchoMessageById(18); ?>">
             </form>
           <?php } ?>

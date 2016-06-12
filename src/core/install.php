@@ -14,7 +14,7 @@
         "INSERT INTO ".$this->tablePrefix."users(nick,password,mail,rank) VALUES ($1, $2, $3, TRUE)",
         array(
           $adminLogin,
-          sha1($adminPasswd),
+          hash('sha512',$adminPasswd),
           $adminMail,
         )
       );

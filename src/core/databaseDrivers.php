@@ -1,4 +1,29 @@
 <?php
+
+  class QueryResultHandler {
+    private $dbDriverName;
+    private $dbResult;
+    private $data;
+
+    function __construct($dbDriverName, $result) {
+      $this->dbDriverName = $dbDriverName;
+      $this->dbResult = $result;
+    }
+
+    public function CountRow() {
+      if ($this->dbDriverName == "PostgreSQL") {
+        return pg_num_rows($this->dbResult);
+      }
+    }
+
+    public function Get() {
+      if ($this->dbDriverName == "PostgreSQL") {
+        $this->data = pg_fetch_object($this->dbResult);
+        return $this->data;
+      }
+    }
+  }
+
   abstract class DatabaseDriver {
     private $host;
     private $port;
@@ -28,6 +53,14 @@
       $this->Execute("BEGIN");
     }
 
+    public function ROLLBACK() {
+      $this->Execute("ROLLBACK");
+    }
+
+    public function COMMIT() {
+      $this->Execute("COMMIT");
+    }
+
     protected function ThrowError($e) {
       if (strpos($e->getMessage(), $this->host) != false && strpos($e->getMessage(), $this->port) == false) {
         throw new ErrorException("Unknow Host", 129);
@@ -52,7 +85,10 @@
     public function PrepareAndExecute($query, $param) {
       $queryName = microtime(true);
       pg_prepare($this->connection, $queryName, $query);
-      return pg_execute($this->connection, $queryName, $param);
+      return new QueryResultHandler(
+        "PostgreSQL",
+        pg_execute($this->connection, $queryName, $param)
+      );
     }
 		
     public function Execute($query) {
@@ -76,7 +112,10 @@
             )
 	  );
 	}
-	return $result;
+	return new QueryResultHandler(
+          "PostgreSQL",
+          $result
+        );
       }
     }
 
@@ -90,4 +129,5 @@
       }
     }
   }
+
 ?>
