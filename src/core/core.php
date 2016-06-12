@@ -93,6 +93,7 @@
     );
     if ($QueryResult->CountRow() == 1) {
       session_start();
+      $_SESSION["userid"] = $QueryResult->get()->id;
       return true;
     }
     return false;
