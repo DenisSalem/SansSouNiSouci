@@ -92,12 +92,26 @@
       )
     );
     if ($QueryResult->CountRow() == 1) {
-      session_start();
       $_SESSION["userid"] = $QueryResult->get()->id;
       return true;
     }
     return false;
 
+  }
+
+  function getUser($id) {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+    $QueryResult = $dbDriver->PrepareAndExecute(
+      "SELECT * FROM ".$TABLE_PREFIX."users WHERE id=$1",
+      array(
+        $id
+      )
+    );
+    if ($QueryResult->CountRow() == 1) {
+      return $QueryResult->get();
+    }
+    return NULL;
   }
 
   require_once("databaseDrivers.php");

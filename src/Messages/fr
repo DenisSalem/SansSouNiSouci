@@ -1,15 +1,15 @@
 Installation
-Nom d'hôte de la base de données:
-Numéro de port de la base de données:
-Type de base de données:
-Nom de la base de données:
-Nom d'utilisateur de la base de données:
-Mot de passe de la base de données:
-Préfix de tables:
-Pseudo de l'administrateur:
-Mail de l'administrateur:
-Mot de passe de l'administrateur:
-Vérification du mot de passe de l'administrateur:
+Nom d'hôte de la base de données
+Numéro de port de la base de données
+Type de base de données
+Nom de la base de données
+Nom d'utilisateur de la base de données
+Mot de passe de la base de données
+Préfix de tables
+Pseudo de l'administrateur
+Mail de l'administrateur
+Mot de passe de l'administrateur
+Vérification du mot de passe de l'administrateur
 Installer
 Un ou plusieurs champ du formulaire ne sont pas renseignés.
 L'adresse mail de l'administrateur n'est pas valide.
@@ -17,3 +17,14 @@ Le mot de passe de l'administrateur ne correspond pas à la vérification.
 Identifiant
 Mot de passe
 Se connecter
+Se déconnecter
+Ajouter un item
+Modifier le profil
+Pseudo
+E-mail
+Avatar
+À propos
+Vérification du mot de passe
+Votre pseudo
+Votre e-mail
+Modifier

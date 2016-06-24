@@ -2,8 +2,8 @@
 #install h1, #splash h1 {
   color: #999;
   font-size: 3em;
-  font-family: Sans;
   text-align: center;
+  font-family: Sans;
   font-weight: lighter;
 }
 
@@ -14,11 +14,34 @@
   border-bottom: 1px solid #CCC;
 }
 
+#content {
+  width: 80%;
+  min-width: 640px;
+  margin: auto;
+  margin-top: 1em;
+}
+
 #toolBar {
+  font-family: Sans;
+  font-weight: lighter;
   width: 100%;
   display: block;
   padding: 5px 5px 5px 5px;
   background-color: #f0d9c2;
+}
+
+#toolBar li {
+  display: inline-block;
+  margin-left: 1em;
+}
+#toolBar a {
+  color: #777;
+  text-decoration: none;
+  transition: 0.125s ease color;
+}
+
+#toolBar a:hover {
+  color: #333;
 }
 
 #toolBar input {
@@ -66,4 +89,61 @@
 
 #install .error {
   color: red;
+}
+
+#profil {
+  text-align: center;
+  width: 80%;
+  min-width: 640px;
+  margin: auto;
+}
+
+#avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  overflow: hidden;
+  display: block;
+  margin: auto;
+  margin-top: 1em;
+  background-color: #f0d9c2;
+}
+
+#profilDetails {
+  text-align: left;
+  display: block;
+  font-family: Sans;
+  font-weight: lighter;
+  list-style-type: none;
+  width: 500px;
+  margin: auto;
+}
+
+#profilDetails li {
+  min-height: 50px;
+  display: block;
+}
+
+#profilDetails input {
+  width: 250px;
+  height: 30px;
+  border: none;
+  margin: none;
+  border-bottom: 1px solid #888;
+  float: right;
+  margin-left: 1em;
+}
+
+#profilDetails input[type=submit] {
+  margin: auto;
+  display: block;
+  float: none;
+}
+
+#profilDetails textarea {
+  width: 100%;
+  border: 1px solid #888;
+  resize: none;
+  height: 180px;
+  margin-bottom: 20px;
 }
