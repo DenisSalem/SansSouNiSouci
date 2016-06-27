@@ -8,6 +8,19 @@
     die('');
   }
   if ($user === NULL) die('');
+
+  if (isset($_POST)) {
+    $fields=array()
+    try {
+      $fields["nick"] = FetchSentData("nick", false);
+      $fields["email"] = FetchSentData("email", false);
+      $fields["password"] = FetchSentData("password", true);
+      $fields["passwordVerify"] = FetchSentData("passwordVerify", true);
+      $fields["about"] = FetchSentData("about",true);
+    }
+    catch (Exception $e) {
+    }
+  }
 ?>
 <div id="profil">
   <div id="avatar">
