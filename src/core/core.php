@@ -114,5 +114,12 @@
     return NULL;
   }
 
+  function UpdateUserProfil($id, $fields) {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+
+    $dbDriver->
+  }
+
   require_once("databaseDrivers.php");
 ?>

@@ -87,7 +87,9 @@
   width: 320px;
 }
 
-#install .error {
+.error {
+  font-family: Sans;
+  font-weight: lighter;
   color: red;
 }
 

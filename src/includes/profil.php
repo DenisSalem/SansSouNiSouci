@@ -9,20 +9,31 @@
   }
   if ($user === NULL) die('');
 
-  if (isset($_POST)) {
-    $fields=array()
+  $errors = array();
+  if (!empty($_POST)) {
+    $fields=array();
     try {
       $fields["nick"] = FetchSentData("nick", false);
       $fields["email"] = FetchSentData("email", false);
-      $fields["password"] = FetchSentData("password", true);
-      $fields["passwordVerify"] = FetchSentData("passwordVerify", true);
-      $fields["about"] = FetchSentData("about",true);
     }
     catch (Exception $e) {
+      array_push($errors, $lang->GetMessageById(30));
     }
+    $fields["password"] = FetchSentData("password", true);
+    $fields["passwordVerify"] = FetchSentData("passwordVerify", true);
+    $fields["about"] = FetchSentData("about",true);
+    
+    $dbDriver->PrepareAndExecute(
+      "UPDATE 
+    );
   }
 ?>
 <div id="profil">
+  <?php
+    if (count($errors) != 0) {
+      EchoErrors($errors);
+    }
+  ?>
   <div id="avatar">
     <img src="<?php echo $user->avatar; ?>" alt="" title="" />
   </div>
@@ -35,7 +46,7 @@
       <label for="email"><?php $lang->EchoMessageById(23); ?></label><input type="text" name="email" value="<?php echo $user->mail; ?>" placeholder="<?php $lang->EchoMessageById(28); ?>" />
     </li>
     <li>
-      <label for="password"><?php $lang->EchoMessageById(17); ?></label><input type="password" value="" placeholder="" />
+      <label for="password"><?php $lang->EchoMessageById(17); ?></label><input type="password" name="password" value="" placeholder="" />
     </li>
     <li>
       <label for="passwordVerify"><?php $lang->EchoMessageById(26); ?></label><input type="password" name="passwordVerify" value="" placeholder="" />
