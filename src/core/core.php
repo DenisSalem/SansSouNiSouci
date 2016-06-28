@@ -114,11 +114,36 @@
     return NULL;
   }
 
+  function ValueAlreadyExists($table, $field, $value,$originID) {
+    global $dbDriver;
+    
+    $QueryResult = $dbDriver->PrepareAndExecute(
+      "SELECT ".$field." FROM ".$table." WHERE ".$field." = $1 AND id != $2",
+      array(
+        $value,
+        $originID
+      )
+    );
+
+    if($QueryResult->CountRow() >= 1) {
+      return true;
+    }
+    return false;
+  }
+
   function UpdateUserProfil($id, $fields) {
     global $dbDriver;
     global $TABLE_PREFIX;
-
-    $dbDriver->
+    
+    $dbDriver->PrepareAndExecute(
+      "UPDATE ".$TABLE_PREFIX."users SET nick=$1, mail=$2,about=$3 WHERE id=$4",
+      array(
+        $fields["nick"],
+        $fields["mail"],
+        $fields["about"],
+        $_SESSION["userid"]
+      )
+    );
   }
 
   require_once("databaseDrivers.php");

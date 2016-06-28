@@ -1,32 +1,6 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
-  
-  try {
-    $user = getUser($_SESSION["userid"]);
-  }
-  catch (Exception $e) {
-    die('');
-  }
-  if ($user === NULL) die('');
-
-  $errors = array();
-  if (!empty($_POST)) {
-    $fields=array();
-    try {
-      $fields["nick"] = FetchSentData("nick", false);
-      $fields["email"] = FetchSentData("email", false);
-    }
-    catch (Exception $e) {
-      array_push($errors, $lang->GetMessageById(30));
-    }
-    $fields["password"] = FetchSentData("password", true);
-    $fields["passwordVerify"] = FetchSentData("passwordVerify", true);
-    $fields["about"] = FetchSentData("about",true);
-    
-    $dbDriver->PrepareAndExecute(
-      "UPDATE 
-    );
-  }
+  require_once("controllers/profil.php");
 ?>
 <div id="profil">
   <?php
@@ -43,7 +17,7 @@
       <label for="nick"><?php $lang->EchoMessageById(22); ?></label><input type="text" name="nick" value="<?php echo $user->nick; ?>" placeholder="<?php $lang->EchoMessageById(27); ?>" />
     </li>
     <li>
-      <label for="email"><?php $lang->EchoMessageById(23); ?></label><input type="text" name="email" value="<?php echo $user->mail; ?>" placeholder="<?php $lang->EchoMessageById(28); ?>" />
+      <label for="mail"><?php $lang->EchoMessageById(23); ?></label><input type="text" name="mail" value="<?php echo $user->mail; ?>" placeholder="<?php $lang->EchoMessageById(28); ?>" />
     </li>
     <li>
       <label for="password"><?php $lang->EchoMessageById(17); ?></label><input type="password" name="password" value="" placeholder="" />
