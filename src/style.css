@@ -93,6 +93,12 @@
   color: red;
 }
 
+.achievement {
+  font-family: Sans;
+  font-weight: lighter;
+  color: green;
+}
+
 #profil {
   text-align: center;
   width: 80%;

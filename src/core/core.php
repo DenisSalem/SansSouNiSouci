@@ -1,6 +1,40 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
 
+  class Notifications {
+    private $errors;
+    private $achievements;
+
+    function __construct() {
+      $this->errors = array();
+      $this->achievements = array();
+    }
+
+    function PushError($message) {
+      array_push($this->errors, $message);
+    }
+
+    function PushAchievement($message) {
+      array_push($this->achievements, $message);
+    }
+
+    function Display() {
+      foreach($this->errors as $value) {
+        echo "<p class=\"error\">".$value."</p>\n";
+      }
+      foreach($this->achievements as $value) {
+        echo "<p class=\"achievement\">".$value."</p>\n";
+      }
+    }
+
+    function NoErrors() {
+      if (count($this->errors) == 0) {
+        return True;
+      }
+      return false;
+    }
+  }
+
   class LanguageHandler {
     private $lang;
 
@@ -41,12 +75,6 @@
 
     throw new ErrorException($errstr, $errno, $errno, $errfile, $errline);
   };
-
-  function EchoErrors($errors) {
-    foreach($errors as $value) {
-      echo "<p class=\"error\">".$value."</p>\n";
-    }
-  }
 
   //Prevent undefined error
   function FetchFromArray($array, $index) {
@@ -134,16 +162,45 @@
   function UpdateUserProfil($id, $fields) {
     global $dbDriver;
     global $TABLE_PREFIX;
-    
-    $dbDriver->PrepareAndExecute(
-      "UPDATE ".$TABLE_PREFIX."users SET nick=$1, mail=$2,about=$3 WHERE id=$4",
-      array(
-        $fields["nick"],
-        $fields["mail"],
-        $fields["about"],
-        $_SESSION["userid"]
-      )
-    );
+    global $notifications;
+    global $lang;
+
+    if (ValueAlreadyExists($TABLE_PREFIX."users","nick",$fields["nick"],$_SESSION["userid"])) {
+      $notifications->PushError($lang->GetMessageById(31));
+    }
+
+    if (ValueAlreadyExists($TABLE_PREFIX."users","mail",$fields["mail"],$_SESSION["userid"])) {
+      $notifications->PushError($lang->GetMessageById(32));
+
+    }
+
+    if(!empty($fields["password"]) && !empty($fields["passwordVerify"]) && $fields["password"] != $fields["passwordVerify"]) {
+      $notifications->PushError($lang->GetMessageById(33));
+    }
+ 
+    if ($notifications->NoErrors()) {
+      $dbDriver->PrepareAndExecute(
+        "UPDATE ".$TABLE_PREFIX."users SET nick=$1, mail=$2,about=$3 WHERE id=$4",
+        array(
+          $fields["nick"],
+          $fields["mail"],
+          $fields["about"],
+          $_SESSION["userid"]
+        )
+      );
+
+      if(!empty($fields["password"]) && !empty($fields["passwordVerify"])) {
+        $dbDriver->PrepareAndExecute(
+          "UPDATE ".$TABLE_PREFIX."users SET password=$1 WHERE id = $2",
+          array(
+            hash('sha512', $fields["password"]),
+            $_SESSION["userid"]
+          )
+        );
+      }
+      $notifications->PushAchievement($lang->GetMessageById(34));
+    }
+
   }
 
   require_once("databaseDrivers.php");

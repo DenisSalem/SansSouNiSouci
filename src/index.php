@@ -11,8 +11,11 @@
   }
   catch(Exception $e) {
   }
+
+  $noErrorOnLogin = true;
+
   if (isset($_POST["nick"]) && isset($_POST["password"]) && !isLoggedIn()) {
-    login();
+    $noErrorOnLogin = login();
   }
   else if (isset($_GET["page"]) && $_GET["page"] == "logoff") {
     session_destroy();
@@ -39,6 +42,11 @@
               <input type="text" name="nick" value="" placeholder="<?php $lang->EchoMessageById(16); ?>">
               <input type="password" name="password" value="" placeholder="<?php $lang->EchoMessageById(17); ?>">
               <input type="submit" value="<?php $lang->EchoMessageById(18); ?>">
+              <?php
+                if (!$noErrorOnLogin) {
+                  echo $lang->GetMessageById(35);
+                }
+              ?>              
             </form>
           <?php } ?>
       </ul>

@@ -4,9 +4,7 @@
 ?>
 <div id="profil">
   <?php
-    if (count($errors) != 0) {
-      EchoErrors($errors);
-    }
+      $notifications->Display();
   ?>
   <div id="avatar">
     <img src="<?php echo $user->avatar; ?>" alt="" title="" />
