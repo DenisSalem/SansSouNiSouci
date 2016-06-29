@@ -202,6 +202,26 @@
     }
 
   }
+  // http://stackoverflow.com/questions/8978566/change-image-size-php
+  // What if gd isn't available?
+  function MakeAvatar($filename, $type) {
+    $original_info = getimagesize($filename);
+    $original_w = $original_info[0];
+    $original_h = $original_info[1];
+    $original_img = imagecreatefromjpg($filename);
+    $thumb_w = 100;
+    $thumb_h = 100;
+    $thumb_img = imagecreatetruecolor($thumb_w, $thumb_h);
+    imagecopyresampled($thumb_img, $original_img,
+      0, 0,
+      0, 0,
+      $thumb_w, $thumb_h,
+      $original_w, $original_h
+    );
+    imagejpeg($thumb_img, $thumb_filename);
+    imagedestroy($thumb_img);
+    imagedestroy($original_img);
+  }
 
   require_once("databaseDrivers.php");
 ?>
