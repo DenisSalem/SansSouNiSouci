@@ -7,9 +7,9 @@
       $notifications->Display();
   ?>
   <div id="avatar">
-    <img src="<?php echo $user->avatar; ?>" alt="" title="" />
+    <img src="avatars/<?php echo $user->avatar; ?>" alt="" title="" />
   </div>
-  <form action="index.php?page=profil" method="post">
+  <form action="index.php?page=profil" method="post" enctype="multipart/form-data">
   <ul id="profilDetails">
     <li>
       <label for="nick"><?php $lang->EchoMessageById(22); ?></label><input type="text" name="nick" value="<?php echo $user->nick; ?>" placeholder="<?php $lang->EchoMessageById(27); ?>" />

@@ -174,9 +174,23 @@
 
     }
 
-    if(!empty($fields["password"]) && !empty($fields["passwordVerify"]) && $fields["password"] != $fields["passwordVerify"]) {
+    if( (!empty($fields["password"]) || !empty($fields["passwordVerify"])) && $fields["password"] != $fields["passwordVerify"]) {
       $notifications->PushError($lang->GetMessageById(33));
     }
+
+    if(!empty($_FILES["avatar"]["tmp_name"])) {
+      $avatar = MakeAvatar($_FILES["avatar"]["tmp_name"]);
+      if ($notifications->NoErrors()) {
+        $dbDriver->PrepareAndExecute(
+          "UPDATE ".$TABLE_PREFIX."users SET avatar=$1 WHERE id=$2",
+          array(
+            $avatar,
+            $_SESSION["userid"]
+          )
+        );
+      }
+    }
+
  
     if ($notifications->NoErrors()) {
       $dbDriver->PrepareAndExecute(
@@ -203,24 +217,52 @@
 
   }
   // http://stackoverflow.com/questions/8978566/change-image-size-php
-  // What if gd isn't available?
-  function MakeAvatar($filename, $type) {
+  // http://stackoverflow.com/questions/6066951/php-image-type-detection
+  function MakeAvatar($filename) {
+    global $notifications;
+    global $lang;
+
+    $extensions = array(IMAGETYPE_PNG => ".png", IMAGETYPE_JPEG => ".jpg"); 
+    $exifType = exif_imagetype($filename);
+    if ( !isset($extensions[$exifType])) {
+      $notifications->PushError($lang->GetMessageById(36));
+      return;
+    }
+    
     $original_info = getimagesize($filename);
     $original_w = $original_info[0];
     $original_h = $original_info[1];
-    $original_img = imagecreatefromjpg($filename);
-    $thumb_w = 100;
-    $thumb_h = 100;
-    $thumb_img = imagecreatetruecolor($thumb_w, $thumb_h);
-    imagecopyresampled($thumb_img, $original_img,
+
+    if($original_w > $original_h) {
+      $avatar_h = 100;
+      $avatar_w = ($original_w / $original_h) * 100;
+    }
+    else {
+      $avatar_w = 100;
+      $avatar_h = ($original_h / $original_w) * 100;
+    }
+
+    if($exifType == IMAGETYPE_PNG) {
+      $original_img = imagecreatefrompng($filename);
+    }
+    else if($exifType == IMAGETYPE_JPEG) {
+      $original_img = imagecreatefromjpeg($filename);
+    }
+
+    $avatar_img = imagecreatetruecolor($avatar_w, $avatar_h);
+    imagecopyresampled($avatar_img, $original_img,
       0, 0,
       0, 0,
-      $thumb_w, $thumb_h,
+      $avatar_w, $avatar_h,
       $original_w, $original_h
     );
-    imagejpeg($thumb_img, $thumb_filename);
-    imagedestroy($thumb_img);
+
+    $avatarFilename = hash('md5',$_SESSION["userid"].$_FILES["avatar"]["tmp_name"]).".png";
+    imagepng($avatar_img, "avatars/".$avatarFilename);
+    imagedestroy($avatar_img);
     imagedestroy($original_img);
+
+    return $avatarFilename;
   }
 
   require_once("databaseDrivers.php");

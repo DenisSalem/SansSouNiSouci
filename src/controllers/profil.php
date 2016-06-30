@@ -23,9 +23,11 @@
       $fields["passwordVerify"] = FetchSentData("passwordVerify", true);
       $fields["about"] = FetchSentData("about",true);
     }
+
     catch (Exception $e) {
       $notifications->pushError($lang->GetMessageById(30));
     }
+
     if ($notifications->NoErrors()) {
       updateUserProfil($_SESSION["userid"], $fields);
     }
