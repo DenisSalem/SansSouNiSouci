@@ -265,5 +265,19 @@
     return $avatarFilename;
   }
 
+  function DeleteAvatar() {
+    global $user;
+    global $dbDriver;
+    global $TABLE_PREFIX;
+    unlink("avatars/".$user->avatar);
+    $dbDriver->PrepareAndExecute(
+      "UPDATE ".$TABLE_PREFIX."users set avatar='' WHERE id=$1",
+      array(
+        $_SESSION["userid"]
+      )
+    );
+
+  }
+
   require_once("databaseDrivers.php");
 ?>

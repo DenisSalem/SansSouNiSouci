@@ -7,7 +7,12 @@
       $notifications->Display();
   ?>
   <div id="avatar">
-    <img src="avatars/<?php echo $user->avatar; ?>" alt="" title="" />
+    <?php
+      if($user->avatar != "") { ?>
+        <img src="avatars/<?php echo $user->avatar; ?>" alt="" title="" />
+        <?php 
+      }
+    ?>
   </div>
   <form action="index.php?page=profil" method="post" enctype="multipart/form-data">
   <ul id="profilDetails">
@@ -34,5 +39,8 @@
       <input type="submit" value="<?php $lang->EchoMessageById(29); ?>" />
     </li>
   </ul>
-  <form>
+  </form>
+  <form id="deleteAvatar" action="index.php?page=profil" method="post">
+    <input type="submit" value="<?php $lang->EchoMessageById(37); ?>" name="deleteAvatar">
+  </form>
 </div>

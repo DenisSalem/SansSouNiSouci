@@ -125,6 +125,7 @@
   list-style-type: none;
   width: 500px;
   margin: auto;
+  padding: 0px;
 }
 
 #profilDetails li {
@@ -132,7 +133,7 @@
   display: block;
 }
 
-#profilDetails input {
+#profilDetails input, #deleteAvatar input {
   width: 250px;
   height: 30px;
   border: none;
@@ -142,7 +143,7 @@
   margin-left: 1em;
 }
 
-#profilDetails input[type=submit] {
+#profilDetails input[type=submit], #deleteAvatar input[type=submit] {
   margin: auto;
   display: block;
   float: none;
