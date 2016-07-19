@@ -237,6 +237,17 @@
     return $exifType;
   }
 
+  function SaveImageIfExists() {
+    if(!empty($_FILES["img"]["tmp_name"])) {
+      $exifType = IsImage($_FILES["img"]["tmp_name"]);
+      $extensions = array(IMAGETYPE_PNG => ".png", IMAGETYPE_JPEG => ".jpg"); 
+      $itemFilename = hash('md5',$_SESSION["userid"].$_FILES["img"]["tmp_name"]).$extensions[$exifType];
+      copy($_FILES["img"]["tmp_name"], "items/".$itemFilename);
+      return $itemFilename;
+    }
+    return "";
+  }
+
   function MakeAvatar($filename) {
     global $notifications;
     global $lang;
@@ -294,7 +305,46 @@
         $_SESSION["userid"]
       )
     );
+  }
 
+  function SaveItem($fields) {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+
+    $cluster = GetLastCluster();
+    if (empty($cluster)) {
+      $dbDriver->Execute(
+        "INSERT INTO ".$TABLE_PREFIX."clusters(type) VALUES(false)"
+      );
+      $cluster = GetLastCluster();
+    }
+
+    $dbDriver->PrepareAndExecute(
+      "INSERT INTO ".$TABLE_PREFIX."items(idowner, idcluster, public, description, img, date) VALUES($1, $2, $3, $4, $5, $6)",
+      array(
+        $_SESSION["userid"],
+        $cluster->id,
+        $fields["public"],
+        $fields["description"],
+        $fields["img"],
+        date("Y-m-d H:i:s")
+      )
+    );
+  }
+
+  function GetLastCluster() {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+
+    $QueryResult = $dbDriver->execute(
+      "SELECT * FROM ".$TABLE_PREFIX."clusters ORDER BY id DESC LIMIT 1"
+    );
+    if($QueryResult->CountRow() < 1) {
+      return null;
+    }
+    else {
+      return $QueryResult->get();
+    }
   }
 
   require_once("databaseDrivers.php");
