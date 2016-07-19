@@ -35,6 +35,7 @@
           if (isLoggedIn()) { ?>
               <li><a href="?page=logoff"><?php $lang->EchoMessageById(19); ?></a></li>
               <li><a href="?page=newItem"><?php $lang->EchoMessageById(20); ?></a></li>
+              <li><a href="?page=newNote"><?php $lang->EchoMessageById(38); ?></a></li>
               <li><a href="?page=profil"><?php $lang->EchoMessageById(21); ?></a></li>
           <?php }
           else { ?>
@@ -55,6 +56,7 @@
     <?php
       $pages = array(
         "newItem",
+        "newNote",
         "profil"
       );
       if(isset($_GET["page"]) && in_array($_GET["page"], $pages, true)) {

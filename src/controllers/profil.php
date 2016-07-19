@@ -1,12 +1,7 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
   
-  try {
-    $user = getUser($_SESSION["userid"]);
-  }
-  catch (Exception $e) {
-    die('');
-  }
+  $user = GetUserOrDie($_SESSION["userid"]);
 
   if ($user === NULL) die('');
 
@@ -15,7 +10,7 @@
   if (!empty($_POST)) {
     if (isset($_POST["deleteAvatar"])) {
       DeleteAvatar();
-      $user = getUser($_SESSION["userid"]);
+      $user = GetUser($_SESSION["userid"]);
     }
     else {
       $fields=array();
@@ -37,7 +32,7 @@
       }
 
       if (count($errors) == 0) {
-        $user = getUser($_SESSION["userid"]);
+        $user = GetUser($_SESSION["userid"]);
       }
     }
   }

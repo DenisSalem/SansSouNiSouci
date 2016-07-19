@@ -127,7 +127,7 @@
 
   }
 
-  function getUser($id) {
+  function GetUser($id) {
     global $dbDriver;
     global $TABLE_PREFIX;
     $QueryResult = $dbDriver->PrepareAndExecute(
@@ -140,6 +140,15 @@
       return $QueryResult->get();
     }
     return NULL;
+  }
+
+  function GetUserOrDie($id) {
+    try {
+      return GetUser($id);
+    }
+    catch (Exception $e) {
+      die('');
+    }
   }
 
   function ValueAlreadyExists($table, $field, $value,$originID) {
@@ -218,13 +227,22 @@
   }
   // http://stackoverflow.com/questions/8978566/change-image-size-php
   // http://stackoverflow.com/questions/6066951/php-image-type-detection
+
+  function IsImage($filename) {
+    $extensions = array(IMAGETYPE_PNG => ".png", IMAGETYPE_JPEG => ".jpg"); 
+    $exifType = exif_imagetype($filename);
+    if ( !isset($extensions[$exifType])) {
+      return null;
+    }
+    return $exifType;
+  }
+
   function MakeAvatar($filename) {
     global $notifications;
     global $lang;
 
-    $extensions = array(IMAGETYPE_PNG => ".png", IMAGETYPE_JPEG => ".jpg"); 
-    $exifType = exif_imagetype($filename);
-    if ( !isset($extensions[$exifType])) {
+    $exifType = IsImage($filename);
+    if ( empty($exifType) ) {
       $notifications->PushError($lang->GetMessageById(36));
       return;
     }
