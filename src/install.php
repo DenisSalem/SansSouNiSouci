@@ -8,7 +8,6 @@
   require_once("core/install.php");
 
   $fields = array();
-  $errors = array();
   try {
     if(!empty($_POST)) {
       $fields["dbHost"] = FetchSentData("dbHost",false);
@@ -23,18 +22,18 @@
       $fields["adminPasswdRepeat"] = FetchSentData("adminPasswdRepeat",false);
       $fields["dbDriver"] = FetchSentData("dbDriver",false);
       if ($fields["adminPasswd"] != $fields["adminPasswdRepeat"]) {
-        array_push($errors, $lang->getMessageById(15));
+        $notifications->pushError($lang->GetMessageById(15));
       }
       if (substr(phpversion(),0,3) >= 5.2 && filter_var($fields["adminMail"], FILTER_VALIDATE_EMAIL, FILTER_NULL_ON_FAILURE) == null) {
-        array_push($errors,$lang->getMessageById(14));
+        $notifications->pushError($lang->GetMessageById(14));
       }
     }
   }
   catch (Exception $e) {
-    array_push($errors,$lang->GetMessageById(13));
+    $notifications->pushError($lang->GetMessageById(13));
   }
 
-  if(!empty($_POST) && count($errors) == 0) {
+  if(!empty($_POST) && $notifications->NoErrors() == true) {
     try {
       if ($fields["dbDriver"] == "pgsql") {
         $install = new InstallPGSQL(
@@ -57,11 +56,11 @@
         }
       }
       else {
-        array_push($errors, $lang->GetMessageById(18));
+        $notifications->pushError($lang->GetMessageById(18));
       }
     }
     catch (Exception $e) {
-      array_push($errors, $e->getMessage());
+      $notifications->pushError($e->getMessage());
     }
   }
 ?>
@@ -76,7 +75,7 @@
 		<form id="install" action="install.php" method="post">
 		        <h1>SANS SOU NI SOUCI</h1>
 		        <h2><?php echo strtoupper($lang->getMessagebyId(0)); ?></h2>
-			<?php EchoErrors($errors); ?>
+                        <?php $notifications->Display(); ?>
 			<label for="dbHost"><?php $lang->echoMessagebyId(1); ?></label>
 			<p><input name="dbHost" type="text" value="<?php echo fetchFromArray($fields,"dbHost"); ?>" placeholder="ex: bdd.lolilol.com"></p>
 			<label for="dbPort"><?php $lang->echoMessagebyId(2); ?></label>

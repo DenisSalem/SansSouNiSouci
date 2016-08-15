@@ -90,6 +90,7 @@
 	  idAuthor bigint REFERENCES ".$tablePrefix."users(id),
 	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
+          tags varchar(512) DEFAULT '',
 	  text varchar(1024) NOT NULL,
           title varchar(64) DEFAULT '',
 	  date timestamp  NOT NULL
@@ -101,6 +102,7 @@
 	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
 	  description varchar(1024) NOT NULL,
+          tags varchar(512) DEFAULT '',
           img varchar(128) DEFAULT '',
 	  date timestamp  NOT NULL
 	)"
