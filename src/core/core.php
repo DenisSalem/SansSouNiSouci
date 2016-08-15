@@ -319,13 +319,15 @@
       $cluster = GetLastCluster();
     }
 
+    print_r($fields);
     $dbDriver->PrepareAndExecute(
-      "INSERT INTO ".$TABLE_PREFIX."items(idowner, idcluster, public, description, img, date) VALUES($1, $2, $3, $4, $5, $6)",
+      "INSERT INTO ".$TABLE_PREFIX."items(idowner, idcluster, public, description, tags, img, date) VALUES($1, $2, $3, $4, $5, $6, $7)",
       array(
         $_SESSION["userid"],
         $cluster->id,
         $fields["public"],
         $fields["description"],
+        $fields["tags"],
         $fields["img"],
         date("Y-m-d H:i:s")
       )

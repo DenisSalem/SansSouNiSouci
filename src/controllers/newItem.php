@@ -9,8 +9,9 @@
     $fields=array();
     try {
       $fields["description"] = FetchSentData("description", false);
+      $fields["tags"] = FetchSentData("tags", true);
       $fields["public"] = FetchSentData("public", true);
-      $fields["public"] = $fields["public"] == "1" ? true : false;
+      $fields["public"] = $fields["public"] == "1" ? 1 : 0;
     }
     catch (Exception $e) {
       print($e);

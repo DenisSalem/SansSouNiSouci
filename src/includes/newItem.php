@@ -13,25 +13,27 @@
         <label for="description"><?php $lang->EchoMessageById(25); ?></about>
         <textarea name="description"></textarea>
       </li>
-    <li>
-      <label for="img"><?php $lang->EchoMessageById(39); ?></label><input type="file" name="img" value="" placeholder="" />
-    </li>
-    <li>
-      <label for="public">
-        <?php $lang->EchoMessageById(40); ?>
-      </label>
-      <select name="public">
-        <option value="1">
-          <?php $lang->EchoMessageById(43); ?>
-        </option>
-        <option value="0">
-          <?php $lang->EchoMessageById(44); ?>
-        </option>
-      </select>
-    </li>
-    <li>
-      <input type="submit" value="<?php $lang->EchoMessageById(42); ?>" />
-    </li>
+      <li>
+        <label for="tags"><?php $lang->EchoMessageById(46); ?></label>
+        <input name="tags" type="text" value="" placeholder="<?php $lang->EchoMessageById(47); ?>" />
+      </li>
+      <li>
+        <label for="img"><?php $lang->EchoMessageById(39); ?></label><input type="file" name="img" value="" placeholder="" />
+      </li>
+      <li>
+        <label for="public"><?php $lang->EchoMessageById(40); ?></label>
+        <select name="public">
+          <option value="1">
+            <?php $lang->EchoMessageById(43); ?>
+          </option>
+          <option value="0">
+            <?php $lang->EchoMessageById(44); ?>
+          </option>
+        </select>
+      </li>
+      <li>
+        <input type="submit" value="<?php $lang->EchoMessageById(42); ?>" />
+      </li>
     </ul>
   </form>
 </div>
