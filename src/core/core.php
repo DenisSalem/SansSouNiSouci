@@ -307,19 +307,45 @@
     );
   }
 
+
+  function SaveNote($fields) {
+    global $dbDriver;
+    global $TABLE_PREFIX;
+    
+    $cluster = GetLastCluster();
+    echo "____"+($cluster->type == 0)+"è____";
+    if (empty($cluster) || $cluster->type == 0) {
+      $dbDriver->Execute(
+        "INSERT INTO ".$TABLE_PREFIX."clusters(type) VALUES(true)"
+      );
+      $cluster = GetLastCluster();
+    }
+    $dbDriver->PrepareAndExecute(
+      "INSERT INTO ".$TABLE_PREFIX."entries(idauthor, idcluster, public, text, tags, title, date) VALUES($1, $2, $3, $4, $5, $6, $7)",
+      array(
+        $_SESSION["userid"],
+        $cluster->id,
+        $fields["public"],
+        $fields["text"],
+        $fields["tags"],
+        $fields["title"],
+        date("Y-m-d H:i:s")
+      )
+    );
+  }
+
   function SaveItem($fields) {
     global $dbDriver;
     global $TABLE_PREFIX;
 
     $cluster = GetLastCluster();
-    if (empty($cluster)) {
+    if (empty($cluster) || $cluster->type == 1) {
       $dbDriver->Execute(
         "INSERT INTO ".$TABLE_PREFIX."clusters(type) VALUES(false)"
       );
       $cluster = GetLastCluster();
     }
 
-    print_r($fields);
     $dbDriver->PrepareAndExecute(
       "INSERT INTO ".$TABLE_PREFIX."items(idowner, idcluster, public, description, tags, img, date) VALUES($1, $2, $3, $4, $5, $6, $7)",
       array(
