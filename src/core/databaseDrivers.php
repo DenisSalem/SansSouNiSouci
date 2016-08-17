@@ -1,4 +1,5 @@
 <?php
+  if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
 
   class QueryResultHandler {
     private $dbDriverName;

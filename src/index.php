@@ -37,6 +37,7 @@
               <li><a href="?page=newItem"><?php $lang->EchoMessageById(20); ?></a></li>
               <li><a href="?page=newNote"><?php $lang->EchoMessageById(38); ?></a></li>
               <li><a href="?page=profil"><?php $lang->EchoMessageById(21); ?></a></li>
+              <li><a href="?page=myContentOverview"><?php $lang->EchoMessageById(53); ?></a></li>
           <?php }
           else { ?>
             <form method="POST" action"index.php">
@@ -57,7 +58,8 @@
       $pages = array(
         "newItem",
         "newNote",
-        "profil"
+        "profil",
+        "myContentOverview"
       );
       if(isset($_GET["page"]) && in_array($_GET["page"], $pages, true)) {
         require_once("includes/".$_GET["page"].".php");

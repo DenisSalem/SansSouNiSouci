@@ -142,9 +142,9 @@
     return NULL;
   }
 
-  function GetUserOrDie($id) {
+  function GetCurrentUserOrDie() {
     try {
-      return GetUser($id);
+      return GetUser($_SESSION["userid"]);
     }
     catch (Exception $e) {
       die('');

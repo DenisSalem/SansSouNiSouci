@@ -1,7 +1,7 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
 
-  $user = GetUserOrDie($_SESSION["userid"]);
+  $user = GetCurrentUserOrDie();
 
   $errors = array();
 

@@ -1,12 +1,8 @@
 <?php
   if ( ! defined("SSNS_SCRIPT_INCLUSION") ) die('NO F*CKING DIRECT SCRIPT ACCESS ALLOWED LOL');
   
-  $user = GetUserOrDie($_SESSION["userid"]);
+  $user = GetCurrentUserOrDie();
 
-  if ($user === NULL) die('');
-
-  $errors = array();
-  
   if (!empty($_POST)) {
     if (isset($_POST["deleteAvatar"])) {
       DeleteAvatar();
@@ -31,7 +27,7 @@
         updateUserProfil($_SESSION["userid"], $fields);
       }
 
-      if (count($errors) == 0) {
+      if ($notifications->NoErrors()) {
         $user = GetUser($_SESSION["userid"]);
       }
     }
