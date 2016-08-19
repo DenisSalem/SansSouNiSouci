@@ -116,9 +116,9 @@ h2 {
   border-radius: 50px;
   overflow: hidden;
   display: block;
+  background-color: #f0d9c2;
   margin: auto;
   margin-top: 1em;
-  background-color: #f0d9c2;
 }
 
 #profilDetails {
@@ -187,4 +187,44 @@ h2 {
   resize: none;
   height: 180px;
   margin-bottom: 20px;
+}
+
+.cluster {
+  width: 80%;
+  margin: auto;
+  margin-top: 1em;
+  display: block;
+}
+
+.cluster .column1, .cluster .column2 {
+  width: 50%;
+}
+
+.cluster .itemImg img {
+  width: 100%;
+}
+
+.cluster .itemId {
+  width: 50px;
+  height: 50px;
+  font-family: Sans;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 2.1em;
+  color: #666;
+  border-radius: 25px;
+  display: block;
+  background-color: #f0d9c2;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0px 3px 5px rgba(0,0,0,0.5);
+}
+.cluster .itemUserAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  overflow: hidden;
+  display: block;
+  background-color: #f0d9c2;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0px 3px 5px rgba(0,0,0,0.5);
 }
