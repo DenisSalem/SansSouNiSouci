@@ -32,7 +32,7 @@
         "\");\n?>";
       $handle = fopen("_config_.php", "w");
       fwrite($handle, $configurationFile);
-      mkdir("avatar");
+      mkdir("avatars");
       mkdir("items");
     }
   }
