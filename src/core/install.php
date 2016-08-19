@@ -87,6 +87,7 @@
       ");
       $this->dbDriver->Execute(
         "CREATE TABLE ".$tablePrefix."entries (
+	  id bigserial PRIMARY KEY,
 	  idAuthor bigint REFERENCES ".$tablePrefix."users(id),
 	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
@@ -98,6 +99,7 @@
       );
       $this->dbDriver->Execute(
         "CREATE TABLE ".$tablePrefix."items (
+	  id bigserial PRIMARY KEY,
 	  idOwner bigint REFERENCES ".$tablePrefix."users(id),
 	  idCluster bigint REFERENCES ".$tablePrefix."clusters(id),
 	  public boolean DEFAULT FALSE,
